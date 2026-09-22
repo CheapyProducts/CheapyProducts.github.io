@@ -30,7 +30,7 @@
             z-index: 1;
         }
 
-        /* Fő tartalom container */
+        /* Fő konténer */
         .main-container {
             position: relative;
             z-index: 10;
@@ -53,7 +53,7 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            /* Sötétített háttérkép elegáns hangulathoz */
+            /* Sötétített háttérkép hálózatról */
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
                         url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1200&auto=format&fit=crop');
             background-size: cover;
@@ -62,7 +62,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
-        /* Egérfölé viteli (hover) hatások */
+        /* Hover effektus az egeres fölévitelnél */
         .wide-card:hover {
             transform: translateY(-5px) scale(1.015);
             border-color: rgba(255, 255, 255, 0.8);
@@ -128,7 +128,7 @@
         let particlesArray = [];
         const numberOfParticles = 120;
 
-        // Egér pozíciója és hatósugara
+        // Egér pozíció és hatósugár
         const mouse = {
             x: null,
             y: null,
@@ -152,13 +152,12 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        // Részecske osztály
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.radius = Math.random() * 2 + 0.8;
-                this.speedY = Math.random() * 0.8 + 0.3; // Hullási sebesség
+                this.speedY = Math.random() * 0.8 + 0.3;
                 this.speedX = (Math.random() - 0.5) * 0.3;
                 this.density = (Math.random() * 20) + 5;
             }
@@ -171,7 +170,6 @@
             }
 
             update() {
-                // Sima kitérés az egér elől
                 if (mouse.x !== null && mouse.y !== null) {
                     let dx = mouse.x - this.x;
                     let dy = mouse.y - this.y;
@@ -190,11 +188,9 @@
                     }
                 }
 
-                // Hullás lefelé
                 this.y += this.speedY;
                 this.x += this.speedX;
 
-                // Ha leér az aljára, visszakerül a tetejére
                 if (this.y > canvas.height) {
                     this.y = -10;
                     this.x = Math.random() * canvas.width;
