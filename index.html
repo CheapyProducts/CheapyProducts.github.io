@@ -14,20 +14,22 @@
         body, html {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            min-height: 100vh;
             background-color: #000000;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             color: #ffffff;
+            overflow-x: hidden;
         }
 
         /* Canvas a részecskéknek */
         #particles {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 1;
+            pointer-events: none;
         }
 
         /* Fő konténer gombokkal */
@@ -38,9 +40,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 25px;
-            height: 100vh;
-            padding: 20px;
+            gap: 20px;
+            min-height: 100vh;
+            padding: 40px 20px 80px 20px;
         }
 
         /* Széles (Wide) kártyák alapstílusa */
@@ -48,7 +50,7 @@
             display: block;
             width: 90%;
             max-width: 800px;
-            height: 150px;
+            height: 120px;
             border-radius: 16px;
             text-decoration: none;
             position: relative;
@@ -56,6 +58,8 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            cursor: pointer;
+            background-color: #111;
         }
 
         /* Fragrances háttere */
@@ -66,20 +70,51 @@
             background-position: center;
         }
 
-        /* Clothes háttere (a feltöltött képed) */
+        /* Clothes háttere */
         .card-clothes {
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
                         url('clothes.jpg'),
-                        url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop'); /* Tartalék kép, ha a clothes.jpg még nincs feltöltve */
+                        url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
         }
 
-        /* Hover effektus az egeres fölévitelnél */
+        /* Electric főkártya háttere */
+        .card-electric {
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), 
+                        url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Escooter al-kártya háttere */
+        .card-escooter {
+            width: 85%;
+            height: 100px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1597089542047-b9873d82d8ec?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Kukirin G2 termékkártya (a feltöltött kukirin.jpg) */
+        .card-kukirin {
+            width: 80%;
+            height: 110px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('kukirin.jpg'),
+                        url('https://images.unsplash.com/photo-1597089542047-b9873d82d8ec?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 215, 0, 0.5); /* Aranyas szegély a kiemeléshez */
+        }
+
+        /* Hover effektusok */
         .wide-card:hover {
-            transform: translateY(-5px) scale(1.015);
+            transform: translateY(-4px) scale(1.01);
             border-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.15);
         }
 
         .card-content {
@@ -88,18 +123,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 15px;
         }
 
-        .card-content h2 {
+        .card-content h2, .card-content h3 {
             color: #ffffff;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 300;
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             text-transform: uppercase;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
         }
 
-        /* Lábléc az oldal alján */
+        .card-content h3 {
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+        }
+
+        .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Lenyíló konténerek */
+        .nested-menu {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .nested-menu.open {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 10px;
+        }
+
+        /* Lábléc */
         footer {
             position: absolute;
             bottom: 20px;
@@ -122,19 +187,46 @@
     <canvas id="particles"></canvas>
 
     <div class="main-container">
-        <!-- 1. Fragrances kártya -->
+        <!-- 1. Fragrances -->
         <a href="https://akciosillat.hu/" target="_blank" class="wide-card card-fragrances">
             <div class="card-content">
                 <h2>FRAGRANCES</h2>
             </div>
         </a>
 
-        <!-- 2. Clothes kártya -->
+        <!-- 2. Clothes -->
         <a href="https://mikiserbiashop.com/" target="_blank" class="wide-card card-clothes">
             <div class="card-content">
                 <h2>CLOTHES</h2>
             </div>
         </a>
+
+        <!-- 3. Electric Menü (Kattintásra nyílik) -->
+        <div class="wide-card card-electric" onclick="toggleMenu('electric-menu', 'electric-arrow')">
+            <div class="card-content">
+                <h2>ELECTRIC</h2>
+                <span id="electric-arrow" class="arrow">▼</span>
+            </div>
+        </div>
+
+        <!-- Escooter Sub-menü -->
+        <div id="electric-menu" class="nested-menu">
+            <div class="wide-card card-escooter" onclick="toggleMenu('escooter-menu', 'escooter-arrow')">
+                <div class="card-content">
+                    <h3>ESCOOTER</h3>
+                    <span id="escooter-arrow" class="arrow">▼</span>
+                </div>
+            </div>
+
+            <!-- Kukirin G2 Termék Kártya -->
+            <div id="escooter-menu" class="nested-menu">
+                <a href="https://allegro.hu/termek/elektromos-jarmu-kukirin-g2-1200w-48v-15ah-45km-h-hatotav-55km-ddb58b23-e79b-46ed-b111-553c0607b097?offerId=18829636961&context=09a1d6c90a8ee0c43ade4f8d0442828a2a1ec6df3462c444133ca349bcfee8ab165f96cd65def2d997838f5973d81dbde26c173abc4e1669f97f3f74286b3ca760d54f9ed000e4841ff943b3643f2a9d29cd5b376e028a793d9926ac79e48f9c6110a05a493aab234725f12fa914cf2920240bc2b78d361f091015e19ac23f4e36c12f32988f1a78818ba9632715810ce5b9f37c30e03068f2ed24a76b1309a706ef3c0a8ed3325a4c123fc0db9abdba045efba386e957340ab2165d69be4e4886f257eacec6f6951aafb3be0b6e464c862ab3da7a89d6d140bbfeb19ea9ff02850aa21e756582d338615c03b88a5ed5d52491fbc1332abc46208ba50bef0be0f756a2d26da5d61ca91422c3154c49ab" target="_blank" class="wide-card card-kukirin">
+                    <div class="card-content">
+                        <h3>KUKIRIN G2</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -142,6 +234,21 @@
     </footer>
 
     <script>
+        // Lenyíló menü vezérlése
+        function toggleMenu(menuId, arrowId) {
+            const menu = document.getElementById(menuId);
+            const arrow = document.getElementById(arrowId);
+            
+            menu.classList.toggle('open');
+            
+            if (menu.classList.contains('open')) {
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Háttér részecskék animációja
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
 
