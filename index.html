@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRAGRANCES</title>
+    <title>CHEAPY PRODUCTS</title>
     <style>
         * {
             margin: 0;
@@ -30,7 +30,7 @@
             z-index: 1;
         }
 
-        /* Fő konténer */
+        /* Fő konténer gombokkal */
         .main-container {
             position: relative;
             z-index: 10;
@@ -38,35 +38,48 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 25px;
             height: 100vh;
             padding: 20px;
         }
 
-        /* Széles (Wide) kattintható kártya */
+        /* Széles (Wide) kártyák alapstílusa */
         .wide-card {
             display: block;
             width: 90%;
             max-width: 800px;
-            height: 160px;
+            height: 150px;
             border-radius: 16px;
             text-decoration: none;
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            /* Sötétített háttérkép */
-            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
-                        url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1200&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
-        /* Hover effektus */
+        /* Fragrances háttere */
+        .card-fragrances {
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                        url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Clothes háttere (a feltöltött képed) */
+        .card-clothes {
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                        url('clothes.jpg'),
+                        url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop'); /* Tartalék kép, ha a clothes.jpg még nincs feltöltve */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Hover effektus az egeres fölévitelnél */
         .wide-card:hover {
             transform: translateY(-5px) scale(1.015);
             border-color: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
         }
 
         .card-content {
@@ -89,7 +102,7 @@
         /* Lábléc az oldal alján */
         footer {
             position: absolute;
-            bottom: 25px;
+            bottom: 20px;
             left: 0;
             width: 100%;
             text-align: center;
@@ -109,10 +122,17 @@
     <canvas id="particles"></canvas>
 
     <div class="main-container">
-        <!-- Kattintható Wide gomb/kártya -->
-        <a href="https://akciosillat.hu/" target="_blank" class="wide-card">
+        <!-- 1. Fragrances kártya -->
+        <a href="https://akciosillat.hu/" target="_blank" class="wide-card card-fragrances">
             <div class="card-content">
                 <h2>FRAGRANCES</h2>
+            </div>
+        </a>
+
+        <!-- 2. Clothes kártya -->
+        <a href="https://mikiserbiashop.com/" target="_blank" class="wide-card card-clothes">
+            <div class="card-content">
+                <h2>CLOTHES</h2>
             </div>
         </a>
     </div>
